@@ -1,25 +1,25 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors',1);
+header('Content-Type: text/html; charset=utf-8');
+$page = (isset($_GET['page']) ? $_GET['page'] : 'main');
+?>
+<html>
+<head>
+<title>Наш первый сайт</title>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="index.php?page=main">Главная страница сайта</a> | 
+        <a href="index.php?page=contacts">Контакты</a>
+    </nav>
+</header>
 
-require('../vendor/autoload.php');
+<?php include basename($page).'.php'; ?>
 
-$app = new Silex\Application();
-$app['debug'] = true;
-
-// Register the monolog logging service
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
-  'monolog.logfile' => 'php://stderr',
-));
-
-// Register view rendering
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
-
-// Our web handlers
-
-$app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging output.');
-  return $app['twig']->render('index.twig');
-});
-
-$app->run();
+<footer>
+    Сайт сделан сегодня и все права принадлежат его создателю :)
+</footer>
+</body>
+</html>
